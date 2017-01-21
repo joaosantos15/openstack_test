@@ -1,0 +1,47 @@
+USE es;
+
+CREATE TABLE `es_lugg` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `departure_airport` varchar(45) DEFAULT NULL,
+  `arrival_airport` varchar(45) DEFAULT NULL,
+  `current_status` varchar(45) DEFAULT NULL,
+  `name` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `es_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(45) DEFAULT NULL,
+  `email` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+
+CREATE TABLE `es_owns` (
+  `id` int(11) NOT NULL,
+  `iduser` int(11) DEFAULT NULL,
+  `idluggage` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `iduser_idx` (`iduser`),
+  KEY `idluggage_idx` (`idluggage`),
+  CONSTRAINT `idluggage` FOREIGN KEY (`idluggage`) REFERENCES `es_lugg` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  CONSTRAINT `iduser` FOREIGN KEY (`iduser`) REFERENCES `es_user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+INSERT INTO `es`.`es_lugg` (`departure_airport`, `arrival_airport`, `current_status`) VALUES ('lisbon', 'oporto', 'on plane');
+INSERT INTO `es`.`es_lugg` (`departure_airport`, `arrival_airport`, `current_status`) VALUES ('heathrow', 'lisbon', 'at gate');
+INSERT INTO `es`.`es_lugg` (`departure_airport`, `arrival_airport`, `current_status`) VALUES ('oporto', 'lisbon', 'lost');
+
+
+INSERT INTO `es`.`es_user` (`name`, `email`) VALUES ('pedro pedrocas', 'pedro@gmail.com');
+INSERT INTO `es`.`es_user` (`name`, `email`) VALUES ('nuno nunes', 'nuno@gmail.com');
+INSERT INTO `es`.`es_user` (`name`) VALUES ('paula pauleta');
+
+
+INSERT INTO `es`.`es_owns` (`id`, `iduser`, `idluggage`) VALUES ('10', '1', '2');
+INSERT INTO `es`.`es_owns` (`id`, `iduser`, `idluggage`) VALUES ('11', '2', '3');
+INSERT INTO `es`.`es_owns` (`iduser`, `idluggage`) VALUES ('2', '3');
+INSERT INTO `es`.`es_owns` (`iduser`, `idluggage`) VALUES ('3', '3');
+
